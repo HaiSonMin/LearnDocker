@@ -1,0 +1,15 @@
+version: '3'
+services:
+  learn-docker:
+    build:
+      context: .
+      args:
+        - NODE_ENV=production
+    container_name: container-sys
+    environment:
+      - NODE_ENV=production
+    command: node server.js
+    # env_file:
+    #   - ./.env
+
+    # networks:

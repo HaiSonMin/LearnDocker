@@ -1,0 +1,9 @@
+///////////////////// Database /////////////////////
+1. docker pull mongo
+2. docker run -p 27017:27017 -d --name mongodb mongo
+///////////////////// Backend /////////////////////
+1. docker build -t backend .
+2. docker run -p 80:80 -d --rm --name backendsys backend
+///////////////////// Frontend /////////////////////
+1. docker build -t frontend .
+2. docker run -p 3000:3000 -d --rm -it --name frontendsys frontend
