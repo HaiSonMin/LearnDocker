@@ -1,0 +1,10 @@
+when run by docker command env will be apply by .env
+docker run -d --rm -p 3000:3000 -v ${pwd}:/app:ro -v /app/node_modules --env-file ./.env --name container learn-docker
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v 
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v 
+
+docker exec -it container bash
+1.See all env => printenv

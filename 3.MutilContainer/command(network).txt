@@ -1,0 +1,23 @@
+///////////////////// Network /////////////////////
+1. docker network create network-project
+
+///////////////////// Database /////////////////////
+1. docker pull mongo
+2. docker run -d --name mongodb --network network-product mongo
+2.1 docker run -d --rm --name mongodb 
+   -e MONGO_INITDB_ROOT_USERNAME=user 
+  -e MONGO_INITDB_ROOT_USERNAME=user 
+   --network network-project mongo
+
+///////////////////// Backend /////////////////////
+1. docker build -t backend .
+2. docker run -p 80:80 -d --rm --name backendsys --network network-product backend
+2.1 docker run -p 9000:9000 -d --rm --name backendsys 
+    --network network-project 
+    -v C:\Users\ASUS\Desktop\LearnDocker\3.MutilContainer\backend:/app 
+    -v /app/node_modules 
+    -v logs:/app/logs backend
+
+///////////////////// Frontend /////////////////////
+1. docker build -t frontend .
+2.1 docker run -p 3000:3000 -d -it --rm --name frontendsys --network network-project -v C:\Users\ASUS\Desktop\LearnDocker\3.MutilContainer\frontend/src:/app/src -v /app/node_modules frontend

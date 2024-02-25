@@ -1,0 +1,24 @@
+version: '3'
+services:
+  learn-docker:
+    build: .
+    container_name: container-sys
+    environment:
+      # Apply in container docker
+      # Same .env of local
+      - PORT=3000
+
+    ports:
+      - "3000:3000"
+  mongo:
+    image: mongo
+    container_name: container-mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=haison
+      - MONGO_INITDB_ROOT_PASSWORD=bokute22102000
+
+    volumes:
+      - /mongo-db:/data/db
+# Volumes not bind mount and amonymous
+volumes:
+  mongo-db:

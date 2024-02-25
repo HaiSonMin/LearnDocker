@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME: haison
+    #   - MONGO_INITDB_ROOT_PASSWORD: bokute22102000
+    env_file:
+      - ./env/mongo.env
+    networks:
+      - networks
+  backend:
+    build: ./backend #Should be CHOSE this option(Dockerfile)
+    # build: 
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: backend
+    container_name: backendsys
+    ports:
+      - "9000:9000"
+    volumes:
+      - /app/node_modules
+      - logs:/app/logs
+      - ./backend:/app
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+    networks:
+      - networks
+  frontend:
+    build: ./frontend
+    image: "frontend"
+    container_name: "frontendsys"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - networks
+  # Only volume have name(Not anonymous and bindmount)
+volumes:
+  data:
+  logs:
+
+    # Network
+networks:
+  networks:
+    driver: bridge
+
+################# RUN #################
+# docker-compose up -d
+# docker-compose down -v

@@ -1,0 +1,37 @@
+FROM node
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+
+CMD ["npm","start"]
+
+1. install mongo
+--- docker pull mongo
+2. Build image "network"
+--- docker build -t network .
+3.Create network for db vs local machine 
+--- docker network create connectdb
+4.Connect container "mongodb" vs "connectdb" (mongodb://mongodb/haisondb) 
+--- docker run -d (--rm) --name mongodb --network connectdb mongo
+5.Connect container haisonsys vs "connectdb"
+--- docker run -p 3000:80 -d --rm --name haisonsys --network connectdb network
+
+
+when run by docker command env will be apply by .env
+docker run -d --rm -p 3000:3000 -v ${pwd}:/app:ro -v /app/node_modules --env-file ./.env --name container learn-docker
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build(Only use when we change into Dockerfile)
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v 
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v 
+
+docker exec -it container bash
+1.See all env => printenv
+
+// URL connectdb
+mongodb://username:password@imageNameMongo:27017a
